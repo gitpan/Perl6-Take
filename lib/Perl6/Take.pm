@@ -5,15 +5,13 @@ use strict;
 
 use Carp;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 our @GATHER;
 
-our $gather_guard = "__gather__";
-
 sub gather (&) {
     # We used to push and pop ourselves, but local's easier for cleanup
-    # purposes and since the gather stack only contains references to the
+    # purposes, and since the gather stack only contains references to the
     # takelists, copying it isn't expensive. Unless you have like a couple
     # thousand nested gathers, in which case you're beyond my help.
     local @GATHER = (@GATHER, []);
@@ -24,7 +22,6 @@ sub gather (&) {
 
     return @{ $GATHER[-1] };
 }
-
 
 sub take (@) {
     Carp::croak("take with no gather") unless @GATHER;
@@ -130,7 +127,7 @@ L<http://search.cpan.org/dist/Perl6-Take>
 
 =head1 COPYRIGHT (The "MIT" License)
 
-Copyright 2006 Gaal Yahas.
+Copyright 2006-2007 Gaal Yahas.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
